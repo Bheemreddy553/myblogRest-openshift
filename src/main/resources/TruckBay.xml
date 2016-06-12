@@ -1,0 +1,9 @@
+<TruckBay Path="">
+    <Object Name="Database" type="MYSQL">
+        <Field Name="HOSTNAME" value="localhost"/>
+        <Field Name="DBNAME" value="myblog"/>
+
+        <Field Name="DBUSERNAME" value="root"/>
+        <Field Name="DBPASSWORD" value="honey"/>
+    </Object>
+</TruckBay>
