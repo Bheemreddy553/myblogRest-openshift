@@ -1,0 +1,778 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Transporter Profile Page</title>
+    <meta name="Generator" content="EditPlus">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <meta name="robots" content="noindex">
+    <meta content="utf-8" http-equiv="encoding">
+    <META Http-Equiv="Cache-Control" Content="no-cache"/>
+    <META Http-Equiv="Pragma" Content="no-cache"/>
+    <META Http-Equiv="Expires" Content="0"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/dropdown.css">
+    <link rel="stylesheet" href="css/sweetalert.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+    <script src="js/atmosphere.js"></script>
+    <script src="js/notifymsg.js"></script>
+    <style>
+        .navbar-inverse {
+            background-color:#EBEBEB;
+        }
+        .a:hover {
+            background: red;
+            color: white;
+        }
+        .navbar {
+            margin-bottom: 0;
+        }
+        /* Sticky footer styles
+        -------------------------------------------------- */
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+        body {
+            /* Margin bottom by footer height */
+            margin-bottom: 60px;
+            width: 970px !important;
+            max-width: none !important;
+            min-width: 970px !important;
+            font-family: 'Roboto Slab', serif;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            /* Set the fixed height of the footer here */
+            height: 60px;
+            background-color: #ebebeb;
+        }
+
+
+        /* Custom page CSS
+        -------------------------------------------------- */
+        /* Not required for template or sticky footer method. */
+
+        body > .container {
+            padding: 60px 15px 0;
+
+        }
+        .container .text-muted {
+            margin: 20px 0;
+        }
+
+        .footer > .container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+
+        .modal-title{
+            text-align: center;
+        }
+        .regform{
+            text-align: center;
+            font-size: 15px;
+            font-family: sans-serif;
+        }
+        .menuitem{
+            font-family: 'Roboto Slab', serif;
+        }
+        .my li {
+            width: 200px;
+        }
+        #mymenu{
+            border-radius: 0;
+            padding-top: 10px;
+            padding-bottom: 10px
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+        input[type=number] {
+            -moz-appearance:textfield;
+        }
+        .help-block{
+            color: #D8000C;
+        }
+        .error {
+            color: #D8000C;
+
+        }
+        .app-modal-window .modal-dialog {
+            width: 100% !important;
+        }
+        .ng-pristine  {
+            box-shadow: none;
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="Ctrl" >
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var myurl='/webresources/loginInfo/';
+        $.ajax({
+            type: "GET",
+            url: myurl,
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data){
+                if(data)
+                {
+                    if(data.role=="NOTPAID"){
+                        window.location="total-trcuks-upgrade-payment-page.html";
+                    }
+                    else if(data.role=="Transporter") {
+                        var str=data.name;
+                        $("#userName").text(str.substring(0,10)+"...");
+                        $("#dropdownUserName").text(str.substring(0,10)+"...");
+                        localStorage.clear();
+                        $.each(data, function (key, value) {
+                            localStorage.setItem(key, value);
+                        });
+                        console.log("startr");
+                        $(function () {
+                            console.log("start");
+                            "use strict";
+
+
+                            var socket = $.atmosphere;
+                            var subSocket;
+                            var transport = 'websocket';
+
+                            // We are now ready to cut the request
+                            var request = { url: 'https://webs.truckway.in:65080/pull/'+localStorage.getItem('chatId'),
+                                contentType : "application/json",
+                                trackMessageLength : true,
+                                transport : transport ,
+                                fallbackTransport: 'long-polling'};
+
+                            request.onOpen = function(response) {
+
+                                //  status.text('Choose name:');
+                                console.log("connection opened")
+                                transport = response.transport;
+
+                            };
+
+                            request.onTransportFailure = function(errorMsg, request) {
+                                jQuery.atmosphere.info(errorMsg);
+                                if (window.EventSource) {
+                                    request.fallbackTransport = "sse";
+                                    transport = "sse";
+                                }
+                                console.log("fall back mode :"+ request.fallbackTransport) ;
+                            };
+
+                            request.onReopen=function(response){
+                                console.log("connection Reopen");
+                            };
+                            request.onError = function(response) {
+
+                                console.log("Sorry, but there\'s some problem with your socket or the server is down"+response.getMessage());
+
+                            };
+
+                            request.onMessage = function (response) {
+
+                                // We need to be logged first.
+                                //  if (!myName) return;
+
+                                var message = response.responseBody;
+                                console.log(message)
+                                try {
+                                    var json = jQuery.parseJSON(message);
+                                } catch (e) {
+                                    console.log('This doesn\'t look like a valid JSON: ', message.data);
+                                    return;
+                                }
+
+                                /*   if (!logged) {
+                                 logged = true;
+                                 status.text(myName + ': ').css('color', 'blue');
+                                 input.removeAttr('disabled').focus();
+                                 subSocket.pushLocal(myName);
+                                 } else {*/
+                                // addMessage(json.author, json.message, me ? 'blue' : 'black', new Date(date));
+                                notifyMe(json.message,json);
+                                // }
+                            };
+
+                            request.onClose = function(response) {
+                                console.log("request closed")
+                                //  logged = false;
+                            }
+
+
+                            subSocket = socket.subscribe(request);
+
+
+
+                        });
+                    }
+                    else{
+                        window.location="index.html";
+                    }
+
+                }
+                else
+                {
+                    window.location="index.html";
+
+                }
+            },
+            error: function (error) {
+                console.log(eval(error));
+            }
+        });
+
+    });
+
+</script>
+<!-- row 1: navigation -->
+<div class="row">
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" style="backgroud-color:rgb(235, 235, 235);border-bottom: 0px none;">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="collapse">
+            <img src="images/logo-new.png" alt="logo" >
+            <ul class="nav navbar-nav"style="float:right;" >
+                <li class="dropdown notifications-menu">
+                    <a aria-expanded="false" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-bell" style="font-size: 15px;color: black"></i>
+                        <span class="label label-warning" style="margin-bottom: 5px">0</span>
+                    </a>
+                    <ul class="dropdown-menu" style="margin-right: 100px;">
+
+                        <li class="header">You have No  notifications</li>
+                    </ul>
+                </li>
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-user" style="color: black"></i>
+                        <span STYLE="color: black" id="userName"></span><i class="caret" style="color:#000000"></i>
+                    </a>
+                    <ul class="dropdown-menu" style="margin-right:10px">
+                        <!-- User image -->
+                        <li class="user-header bg-light-blue">
+                            <img  class="img-circle" src="images/user.png" alt="User Image"/>
+
+                            <p style="font-size: 18px;" id="dropdownUserName">
+                            </p>
+                        </li>
+                        <!-- Menu Body -->
+                        <li class="user-body" style="display:none">
+                            <div class="col-xs-6 no-padding">
+                                <a class="btn btn-default btn-flat"  style="font-size:13px">View Profile</a>                </div>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-left">
+                                <a class="btn btn-default btn-flat" data-toggle="modal" data-target="#password_modal"style="font-size:12px">Change Password</a>                </div>
+                            <div class="pull-right">
+                                <a class="btn btn-default btn-flat" href="logout" data-method="post"  style="font-size:12px">Sign out</a>                </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu_item"><a href="index.html" class="menuitem" style="color:black"onmouseover="this.style.color = 'red'" onmouseout="this.style.color = 'black'"></span>Home</a></li>
+                <li class="menuitem" ><a href="#" style="color:black"><span class="glyphicon glyphicon-earphone" style="color:black;font-weight: 700;"></span><span class="menuitem1" sytle="color:black">&nbsp;CALL US:+91 9393 92 91 90</span></a></li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container">
+    <div class="row" >
+        <div class="col-md-3">
+            <div  style="margin-top:30px">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse1" style="float:left;background-color: #8F8686;">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar" style="background-color: black;"></span>
+                        <span class="icon-bar" style="background-color: black;"></span>
+                        <span class="icon-bar" style="background-color: black;"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="collapse1">
+                    <ul class="nav navbar-nav my" style="position:relative;">
+                        <li><a href="transporter-profile-page.html"class="list-group-item " id="mymenu">Update Idle Trucks</a></li>
+                        <li><a href="transporter-truck-info.html" class="list-group-item" id="mymenu">Present Idle Trucks</a></li>
+                        <li><a href="transporter-request-details.html" class="list-group-item" id="mymenu">Request's Details</a></li>
+                        <li><a href="transporter-booking-details.html" class="list-group-item" id="mymenu">Booking's Details</a></li>
+                        <li><a href="transporter-update-totaltrucks.html" class="list-group-item" id="mymenu">Update Total Trucks</a></li>
+                        <li><a href="transporter-update-presonal-info.html" class="list-group-item" id="mymenu">Update Company Information</a></li>
+                        <li><a href="transporter-manage-myplaces.html" class="list-group-item" id="mymenu">Manage My Places</a></li>
+                        <li><a href="eAuctionPage.html" class="list-group-item active" id="mymenu">E-Auction</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div  class="col-md-9" style="padding-top: 40px" >
+            <ul class="nav nav-tabs responsive-tabs">
+                <li class="active"><a href="#tab1" style="text-align: center" data-toggle="tab">Latest bids</a></li>
+                <li><a href="#tab2" style="text-align: center" data-toggle="tab">My bids</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab1"><br/>
+                    <div class="col-md-offset-8 form-inline">
+
+
+                    </div>
+                    <table class="table table-bordered table-hover table-condensed" ng-hide="isData == 'loading'" style="margin-top: 20px;width: 100%" >
+                        <thead ng-hide="isData == 'nodata'" >
+                        <tr >
+                            <th>
+                                S.no
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                From
+                            </th>
+                            <th>
+                                To
+                            </th>
+                            <th>
+                                Truck Type
+                            </th>
+                            <th>
+                                Material Type
+                            </th>
+                            <th>
+                                Trucks
+                            </th>
+                            <th>
+                                Last date for bid
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="isData == 'nodata'" >
+                            <td>No auctions found</td>
+                        </tr >
+                        <tr ng-show="isData == 'data'" ng-repeat="auctionDetail in auctionDetails track by $index" >
+                            <td><span ng-bind="$index + 1"></span></td>
+                            <td><span ng-bind="auctionDetail.startTimeString"></span></td>
+                            <td><span ng-bind="auctionDetail.stopTimeString"></span></td>
+                            <td><span ng-bind="auctionDetail.fromPlace" ></span></td>
+                            <td><span ng-bind="auctionDetail.toPlace" ></span></td>
+                            <td><span ng-bind="auctionDetail.truckType" ></span></td>
+                            <td><span ng-bind="auctionDetail.materialType" ></span></td>
+                            <td><span ng-bind="auctionDetail.numberOfTrucks" ></span></td>
+                            <td><span ng-bind="auctionDetail.resultTimeString" ></span></td>
+                            <td><button class="btn btn-info" ng-click="viewDetails(auctionDetail)" >View details</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4 ng-show="isData == 'loading'">Loading auctions</h4>
+
+                    </div>
+                <div class="tab-pane" id="tab2" ><br/>
+                    <div class="col-md-offset-8 form-inline">
+                        <label>Search:</label>
+                        <input type="text" ng-model="searchText1" class="form-control" >
+                    </div>
+                    <table class="table table-bordered table-hover table-condensed" ng-hide="isData == 'loading'" style="margin-top: 20px;width: 100%" >
+                        <thead ng-hide="isData1 == 'nodata'" >
+                        <tr >
+                            <th>
+                                S.no
+                            </th>
+                            <th>
+                                Start Date
+                            </th>
+                            <th>
+                                End Date
+                            </th>
+                            <th>
+                                From
+                            </th>
+                            <th>
+                                To
+                            </th>
+                            <th>
+                                Truck Type
+                            </th>
+                            <th>
+                                Material Type
+                            </th>
+                            <th>
+                                Trucks
+                            </th>
+                            <th>
+                                Quote
+                            </th>
+                            <th></th>
+                            <th>
+                                Status
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-show="isData1 == 'nodata'" >
+                            <td>No auctions found</td>
+                        </tr >
+                        <tr ng-show="isData1 == 'data'" ng-repeat="auctionDetail in myAuctionDetails | filter:searchText1 track by $index" >
+                            <td><span ng-bind="$index + 1"></span></td>
+                            <td><span ng-bind="auctionDetail.auction.startTimeString"></span></td>
+                            <td><span ng-bind="auctionDetail.auction.stopTimeString"></span></td>
+                            <td><span ng-bind="auctionDetail.auction.fromPlace" ></span></td>
+                            <td><span ng-bind="auctionDetail.auction.toPlace" ></span></td>
+                            <td><span ng-bind="auctionDetail.auction.truckType" ></span></td>
+                            <td><span ng-bind="auctionDetail.auction.materialType" ></span></td>
+                            <td><span ng-bind="auctionDetail.auction.numberOfTrucks" ></span></td>
+                            <td><span ng-bind="auctionDetail.quote" ></span></td>
+                            <td><span style="color: green" ng-show="auctionDetail.auction.transportCompany.companyId == userId" > win bid</span>
+                                <button class="btn btn-success"  ng-show="auctionDetail.auction.auctionVal == 'Accepted'"  ng-click="viewIndustry(auctionDetail)" >View Industry</button>
+                            </td>
+                            <td><button class="btn btn-info" ng-click="viewDetails(auctionDetail.auction)" >View details</button></td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                    <h4 ng-show="isData1 == 'loading'">Loading auctions</h4>
+
+                    </div>
+                </div>
+        </div>
+
+    </div>
+</div>
+</div>
+<form id="changepassword" name="changepassword" method="post" style="padding-left:20px;" autocomplete="off">
+    <div class="modal fade" id="password_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Change Password <span class="extra-title muted"></span></h3>
+                </div>
+
+                <div class="modal-body form-horizontal">
+                    <div id="updatesuccess1" class="alert alert-success" style="display:none">
+                        <p class="menuitem">Updated Successfully.
+
+                        <p>
+                    </div>
+                    <div id="updatefail1" class="alert alert-danger" style="display:none">
+                        <p class="menuitem">Updated Failed.
+
+                        <p>
+                    </div>
+                    <div class="control-group">
+                        <label for="currentPassWord" class="control-label">Current Password</label>
+
+                        <div class="controls">
+                            <input type="password" class="form-control" class="form-cons" id="currentPassWord" name="currentPassWord" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="newPassWord"  class="control-label">New Password</label>
+
+                        <div class="controls">
+                            <input type="password" class="form-control" id="newPassWord" name="newPassWord" required>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label for="confirmPassWord" class="control-label">Confirm Password</label>
+
+                        <div class="controls">
+                            <input type="password" class="form-control" id="confirmPassWord" name="confirmPassWord" required>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" data-dismiss="modal">Close</a>
+                    <button type="submit" class="btn btn-primary" name="submit" id="submit">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script id="viewDetails.html" type="text/ng-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" aria-hidden="true"><i class="glyphicon glyphicon-remove"
+                                                                                      style="color:black"></i></button>
+        <h4 class="modal-title">View auction details</h4>
+    </div>
+    <div class="modal-body" style=" padding-left: 20%;padding-right: 20%;">
+        <div class="row" style="margin-bottom: 30px" ng-hide="auctionDetail.auctionVal=='Accepted'">
+            <form ng-submit="sendQuote(quote)">
+                <div class="col-md-5 form-inline">
+                    <label>Quote amount (Per truck):</label>
+                    <input type="number" name="quote" min="1000" max="100000" ng-model="quote" class="quote" required="required" >
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success" >Accept</button>
+                </div>
+                <div class="col-md-5"></div>
+            </form>
+        </div>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr>
+                <th>
+                    Start Date
+                </th>
+                <th>
+                    End Date
+                </th>
+                <th>
+                    From
+                </th>
+                <th>
+                    To
+                </th>
+                <th>
+                    Truck Type
+                </th>
+                <th>
+                    Material Type
+                </th>
+                <th>
+                    No of trucks
+                </th>
+                <th>
+                    Last date for bid
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span ng-bind="auctionDetail.startTimeString" ></span>
+                </td>
+                <td>
+                    <span ng-bind="auctionDetail.stopTimeString" ></span>
+                </td>
+                <td><span ng-bind="auctionDetail.fromPlace" ></span></td>
+                <td><span ng-bind="auctionDetail.toPlace" ></span></td>
+                <td><span ng-bind="auctionDetail.truckType" ></span></td>
+                <td><span ng-bind="auctionDetail.materialType" ></span></td>
+                <td><span ng-bind="auctionDetail.numberOfTrucks" ></span></td>
+                <td><span ng-bind="auctionDetail.resultTimeString" ></span></td>
+            </tr>
+            </tbody>
+        </table>
+        <div>
+            <h4>Information</h4>
+            <div dynamic="auctionDetail.info">
+
+            </div>
+        </div>
+        <div>
+            <h4>Terms & Conditions</h4>
+            <div dynamic="auctionDetail.instructions">
+
+            </div>
+        </div>
+
+    </div>
+</script>
+<script id="viewIndustry.html" type="text/ng-template">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" aria-hidden="true"><i class="glyphicon glyphicon-remove"
+                                                                                      style="color:black"></i></button>
+        <h4 class="modal-title">View Industry details</h4>
+    </div>
+    <div class="modal-body" style=" padding-left: 20%;padding-right: 20%;">
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+            <tr>
+
+                <th>
+                    Industry Name
+                </th>
+                <th>
+                    Industry Mobile Number
+                </th>
+                <th>
+                    Type Of Industry
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    Area
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><span ng-bind="auctionDetail.auction.industrialUser.industry.companyName" ></span></td>
+                <td><span ng-bind="auctionDetail.auction.industrialUser.userDetails.mobileNumber" ></span></td>
+                <td><span ng-bind="auctionDetail.auction.industrialUser.industry.type" ></span></td>
+                <td>
+                    <span ng-bind="auctionDetail.auction.industrialUser.userDetails.city" ></span>
+                </td>
+                <td>
+                    <span ng-bind="auctionDetail.auction.industrialUser.userDetails.area" ></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</script>
+
+<script src="js/jquery.validate.min.js"></script>
+<script src="js/sweetalert.min.js"></script>
+<script type="text/javascript" src="https://assets.freshdesk.com/widget/freshwidget.js"></script>
+<script type="text/javascript">
+    FreshWidget.init("", {"queryString": "&widgetType=popup&formTitle=Help+%26+Support&submitThanks=Thank+you+for+Feed+Back&searchArea=no", "utf8": "?", "widgetType": "popup", "buttonType": "text", "buttonText": "Feed Back", "buttonColor": "white", "buttonBg": "#006063", "alignment": "2", "offset": "235px", "submitThanks": "Thank you for Feed Back", "formHeight": "500px", "url": "https://synycys.freshdesk.com"} );
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
+<script src="/js/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="js/auctionCtrlTransporter.js"></script>
+<script type="text/javascript">
+    (function($,W,D)
+    {
+        var JQUERY4U = {};
+
+        JQUERY4U.UTIL =
+        {
+            setupFormValidation: function(event)
+            {
+
+                //event.preventDefault();
+                //form validation rules
+                $("#changepassword").validate({
+
+                    ignore: "", //To validate hidden fields
+                    rules: {
+                        currentPassWord: {
+                            required: true,
+                            minlength: 5
+                        },
+                        newPassWord: {
+                            required: true,
+                            minlength: 5
+                        },
+                        confirmPassWord: {
+                            required: true,
+                            minlength: 5,
+                            equalTo: "#newPassWord"
+                        }
+                    },
+                    messages:{
+                        currentPassWord: {
+                            required: "Please enter a password",
+                            minlength: "Password must be at least 5 characters long"
+                        },
+                        newPassWord: {
+                            required: "Please enter a new password",
+                            minlength: "Your password must be at least 5 characters long"
+                        },
+                        confirmPassWord: {
+                            required: "Please enter new password again",
+                            minlength: "Your password must be at least 5 characters long",
+                            equalTo: "new Password and retype password doesn't match"
+                        }
+                    },
+
+                    submitHandler: function(form) {
+                        datacatch();
+
+
+                    }
+                });
+
+            }
+        }
+
+        //when the dom has loaded setup form validation rules
+        $(D).ready(function($) {
+            JQUERY4U.UTIL.setupFormValidation();
+        });
+
+    })(jQuery, window, document);
+    function datacatch()
+    {
+        // event.preventDefault();
+        var comid = localStorage.getItem('loginId');
+        var $items = $(' #currentPassWord, #newPassWord,#confirmPassWord');
+        var obj = {}
+        $items.each(function() {
+            obj[this.id] = $(this).val();
+        })
+
+        var json= JSON.stringify( obj);
+
+        $.ajax({
+            type: "POST",
+            url: '/webresources/transportCompany/passWord/'+comid,
+            data: json,
+            dataType: "json",
+            contentType: "application/json",
+
+            //beforeSend: function(){ $("#login").val('Connecting...');},
+            success:function(data){
+
+
+                if($.trim(data)=="true")
+                {
+                    //alert("suu");
+                    $("#changepassword")[0].reset();
+                    $('#updatefail1').css('display', 'none');
+                    $('#updatesuccess1').fadeTo(5000, 500).slideUp(500, function(){
+
+                    });
+                }
+                else
+                {
+                    //Shake animation effect.
+                    $("#changepassword")[0].reset();
+                    $('#updatesuccess1').css('display', 'none');
+                    $('#updatefail1').fadeTo(5000, 500).slideUp(500, function(){
+
+                    });
+
+                }
+            },
+            error:function(data){
+                console.log(data);
+            }
+
+        });
+    }
+
+
+</script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var $_Tawk_API={},$_Tawk_LoadStart=new Date();
+    (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/55b70bd7e5c2a74e57a6de95/default';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+</body>
+<script src="/js/jquery.blockUI.js" ></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="js/myBlogApp.js"></script>
+    <style>
+        body {
+            padding-top:50px;
+        }
+
+        #masthead {
+            min-height:270px;
+            background-color:#000044;
+            color:#aaaacc;
+        }
+
+        #masthead h1 {
+            font-size: 55px;
+            line-height: 1;
+        }
+
+        #masthead .well {
+            margin-top:13%;
+            background-color:#111155;
+            border-color:#000033;
+        }
+
+        .icon-bar {
+            background-color:#fff;
+        }
+
+        @media screen and (min-width: 768px) {
+            #masthead h1 {
+                font-size: 100px;
+            }
+        }
+
+        .navbar-bright {
+            background-color:#111155;
+            color:#fff;
+        }
+
+        .navbar-bright a, #masthead a, #masthead .lead {
+            color:#aaaacc;
+        }
+
+        .navbar-bright li > a:hover {
+            background-color:#000033;
+        }
+
+        .affix-top,.affix{
+            position: static;
+        }
+
+        @media (min-width: 979px) {
+            #sidebar.affix-top {
+                position: static;
+                margin-top:30px;
+                width:228px;
+            }
+
+            #sidebar.affix {
+                position: fixed;
+                top:70px;
+                width:228px;
+            }
+        }
+
+        #sidebar li.active {
+            border:0 #eee solid;
+            border-right-width:4px;
+        }
+
+        #mainCol h2 {
+            padding-top: 55px;
+            margin-top: -55px;
+        }
+
+
+        .form-inline .form-group {
+            margin-right: 10px;
+        }
+
+        .well-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgb(66, 139, 202);
+            border-color: rgb(53, 126, 189);
+        }
+        .row.ng-scope {
+            margin-top: 38px;
+        }
+        .glyphicon {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="navbar navbar-bright navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">Bootply</a>
+        </div>
+        <nav class="collapse navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">Get Started</a>
+                </li>
+                <li>
+                    <a href="#">Edit</a>
+                </li>
+                <li>
+                    <a href="#">Visualize</a>
+                </li>
+                <li>
+                    <a href="#">Prototype</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Begin Body -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3" id="leftCol">
+
+            <ul class="nav nav-stacked" id="sidebar">
+                <li><a href="newblog_post_form.html">New Post</a></li>
+                <li><a href="viewlistpost.html">List of Posts</a></li>
+                <li><a href="#sec2">Section 2</a></li>
+                <li><a href="#sec3">Section 3</a></li>
+                <li><a href="#sec4">Section 4</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9" id="mainCol" ng-app="myBlogApp">
+
+             <div class="row" ng-controller="blogPostSubmissionCtrl">
+              <!--  <alert ng-repeat="alert in alerts" ng-if="alert.msg" dismiss-on-timeout='5000' type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+-->
+                <div class="col-md-12">
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span
+                                            class="glyphicon glyphicon-file">
+                            </span>POST NEW ARTICLE</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in">
+                                <form class="form" action="#" id="postData" role="form"  ng-submit="submitArticleForm()" >
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control"  ng-model="title" placeholder="Title"   required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" placeholder="Enter Description" ng-model="subject"   rows="subject" required></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <textarea class="form-control" placeholder="Content" ng-model="content"   rows="5" required></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="category">
+                                                        Category</label>
+                                                    <select class="form-control" id="category">
+                                                        <option>Articles</option>
+                                                        <option>Tutorials</option>
+                                                        <option>Freebies</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="tags">
+                                                        Tags</label>
+                                                    <input type="text" class="form-control" id="tags" ng-model="tags"
+                                                           placeholder="Tags"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="category">
+                                                        Category</label>
+                                                    <select class="form-control" id="category1">
+                                                        <option>Articles</option>
+                                                        <option>Tutorials</option>
+                                                        <option>Freebies</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="tags">
+                                                        Tags</label>
+                                                    <input type="text" class="form-control" id="tags1" ng-model="tags"
+                                                           placeholder="Tags"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="col-md-3">
+                                                    <!-- <input type="submit" ngClick="Submit" >-->
+                                                    <button type="submit" class="btn btn-primary" ngClick="submit">Submit</button><hr>
+                                                </div>
+                                                <!--  <div class="col-md-3">
+                                                      <button type="submit" class="btn">Cancel</button><hr>
+                                                  </div>-->
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"><span
+                                            class="glyphicon glyphicon-th-list">
+                            </span>META DATA</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Title" ng-model="title" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" placeholder="Description" ng-model="description" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" placeholder="Keywords" ng-model="keywords" required></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="well well-sm well-primary">
+                                                <form class="form form-inline " role="form">
+                                                    <div class="form-group">
+                                                        <a href="http://www.jquery2dotnet.com"
+                                                           class="btn btn-success btn-sm"><span
+                                                                class="glyphicon glyphicon-floppy-disk">
+                                            </span>Save</a>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#sidebar').affix({
+        offset: {
+            top: 245
+        }
+    });
+
+    var $body   = $(document.body);
+    var navHeight = $('.navbar').outerHeight(true) + 10;
+
+    $body.scrollspy({
+        target: '#leftCol',
+        offset: navHeight
+    });
+</script>
+</body>
+</html>

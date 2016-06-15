@@ -1,26 +1,18 @@
 package com.myblog;
 
+import com.synycs.truckbay.server.BlogPost;
+import com.synycs.truckbay.server.services.AdminService;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
-
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.synycs.truckbay.server.BlogPost;
-import com.synycs.truckbay.server.services.AdminService;
 
 @Path("/blogPost")
 public class BlogPostService {
@@ -71,11 +63,11 @@ public class BlogPostService {
         try {
             blogPost.setTime(dateInIndia);
             adminService.addBlogPost(blogPost);
-            myResponse.setResponse("false");
+            myResponse.setResponse("true");
         }
         catch (Exception e){
             e.printStackTrace();
-            myResponse.setResponse("true");
+            myResponse.setResponse("false");
         }
         return myResponse;
 

@@ -45,11 +45,10 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.3.0" />
           <element id="library" level="project" name="Maven: org.glassfish.jersey.media:jersey-media-multipart:2.22.1" />
           <element id="library" level="project" name="Maven: org.jvnet.mimepull:mimepull:1.9.6" />
-          <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/truck-1.0.jar" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/MANIFEST.MF" />
+        <element id="file-copy" path="C:\myBlog\atHomeWork\myblogRest\target/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="myblog-webapp/web/Web" />
     </root>
