@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Example of Bootstrap 3 Responsive Navbar</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style type="text/css">
+         .navbar{
+            width: 100%;
+             padding: 10px;
+            background: #333333;
+            color: #fff;
+            position: absolute;
+        }
+         .brand-centered {
+             display: flex;
+             justify-content: center;
+             position: absolute;
+             width: 100%;
+             left: 0;
+             top: 0;
+         }
+         .navbar-brand {
+             display: flex;
+             align-items: center;
+         }
+
+        .navbar-nav > li{
+            padding-left:5px;
+            padding-right:5px;
+            margin-left:25px;
+            margin-right:25px;
+        }
+
+         .navbar .nav > li > a {
+             float: none;
+             text-decoration: none;
+             text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+             color: #fff;
+             /*font-family: 'Sue Ellen Francisco',cursive;*/
+             font-family: Copperplate, 'Copperplate Gothic Light', fantasy;;
+             font-size: 16px;
+             line-height: 1;
+             text-transform: uppercase;
+         }
+          .navbar .nav > li > a:focus,
+          .navbar .nav > li > a:hover{
+              color: #ef57ff;
+         }
+         .dropdown-toggle:hover{
+             color: #fff;
+         }
+         body,html {
+             height: 100%;
+         }
+
+
+
+         #main_top {
+        /*     background-image:url('https://c.stocksy.com/a/RcN300/z0/805779.jpg');*/
+             background-image: url('imges/olympic-national-park.jpg');
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-attachment: fixed;
+             height: 670px;
+         }
+
+         @media (max-width: 767px) {
+             body {
+                 padding-left: 0 !important;
+                 padding-right: 0 !important;
+             }
+         }
+         .posts{
+             background-image: url('imges/248547449.jpg');
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-attachment: fixed;
+         }
+
+         .posts h2{
+
+             text-align: center;
+             text-transform: uppercase;
+             background: url('imges/homepage_banner_white_@2x.png') no-repeat;
+             background-size: contain;
+             font-family: 'Lato',sans-serif;
+             font-size: 20px;
+             font-weight: 700;
+             display: block;
+           /*  margin: 40px 40px 40px 60px;*/
+             margin-top: 40px;
+             margin-bottom: 40px;
+             margin-left: 32%;
+             padding: 18px 0;
+
+             max-width: 425px;
+             height: 60px;
+         }
+         .suggestions  h2{
+             text-align: center;
+             text-transform: uppercase;
+             background: url('imges/homepage_banner_grey_@2x.png') no-repeat;
+             background-size: contain;
+             font-family: 'Lato',sans-serif;
+             font-size: 20px;
+             font-weight: 700;
+             display: block;
+            /* margin: 30px auto 10px auto;
+             padding: 15px 0;*/
+             max-width: 425px;
+             height: 60px;
+             line-height: 1;
+
+         }
+
+         .resources{
+             background-image: url('imges/bolivia-salt-flats.jpg');
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-attachment: fixed;
+         }
+         .resources h2{
+             text-align: center;
+             text-transform: uppercase;
+             background: url('imges/homepage_banner_grey_@2x.png') no-repeat;
+             background-size: contain;
+             font-family: 'Lato',sans-serif;
+             font-size: 20px;
+             font-weight: 700;
+             display: block;
+             margin-top: 40px;
+             margin-bottom: 40px;
+             margin-left: 32%;
+             padding: 18px 0;
+
+             max-width: 425px;
+             height: 60px;
+             line-height: 1;
+         }
+         .thumbnail {
+             position: relative;
+             padding: 0px;
+             margin-bottom: 20px;
+         }
+
+         .thumbnail > h4 {
+             padding: 7px 5px 0px;
+             white-space: nowrap;
+             overflow: hidden;
+             text-overflow: ellipsis;
+         }
+         .thumbnail h4 .info {
+             position: absolute;
+             top: 0px;
+             right: 0px;
+             font-size: 0.6em;
+             padding-left: 15px;
+             border-top-right-radius: 3px;
+             border-bottom-left-radius: 4px;
+             border-radius: 0px;
+             border-bottom-left-radius: 5px;
+             cursor:  pointer;
+         }
+
+         .thumbnail h4 .info > span {
+             margin-right: 10px;
+         }
+
+         .thumbnail img {
+             width: 100%;
+         }
+         .thumbnail a.btn {
+             border-top-left-radius: 0px;
+             border-top-right-radius: 0px;
+         }
+         /* add a little bottom space under the images */
+
+         #portfolio .row{
+             margin:50px /* margin around the "whole row" not inbetween "stacked rows" */
+
+         }
+
+         #portfolio .img-thumbnail{
+             border:150px;
+             border-radius:4px; /* slight round in images in gallery */
+             margin:0px;
+             padding:0px;
+
+         }
+
+         .full {
+             width: 100%;
+             height: 40px;
+         }
+         .gap {
+             height: 30px;
+             width: 100%;
+             clear: both;
+             display: block;
+         }
+         .footer {
+             background: rgba(241, 42, 166, 0.43);
+             height: auto;
+             padding-bottom: 30px;
+             position: relative;
+             width: 100%;
+             border-bottom: 1px solid #CCCCCC;
+             border-top: 1px solid #DDDDDD;
+
+             background-image: url('imges/Moonrise-over-old-man-of-Storr-.jpg');
+             background-repeat: no-repeat;
+             background-size: cover;
+             background-attachment: fixed;
+         }
+         .footer p {
+             margin: 0;
+         }
+         .footer img {
+             max-width: 100%;
+         }
+         .footer h3 {
+             border-bottom: 1px solid #BAC1C8;
+             color: #fff;
+             font-size: 18px;
+             font-weight: 600;
+             line-height: 27px;
+             padding: 40px 0 10px;
+             text-transform: uppercase;
+         }
+         .footer ul {
+             font-size: 13px;
+             list-style-type: none;
+             margin-left: 0;
+             padding-left: 0;
+             margin-top: 15px;
+             color: #7F8C8D;
+         }
+         .footer ul li a {
+             padding: 0 0 5px 0;
+             display: block;
+         }
+         .footer a {
+             color: #fafafa;;
+             font-weight: 700;
+         }
+         .supportLi h4 {
+             font-size: 20px;
+             font-weight: lighter;
+             line-height: normal;
+             margin-bottom: 0 !important;
+             padding-bottom: 0;
+         }
+         .newsletter-box input#appendedInputButton {
+             background: #FFFFFF;
+             display: inline-block;
+             float: left;
+             height: 30px;
+             clear: both;
+             width: 100%;
+         }
+         .newsletter-box .btn {
+             border: medium none;
+             -webkit-border-radius: 3px;
+             -moz-border-radius: 3px;
+             -o-border-radius: 3px;
+             -ms-border-radius: 3px;
+             border-radius: 3px;
+             display: inline-block;
+             height: 40px;
+             padding: 0;
+             width: 100%;
+             color: #fff;
+             background: #337ab7;
+         }
+         .newsletter-box {
+             overflow: hidden;
+         }
+         .bg-gray {
+             background-image: -moz-linear-gradient(center bottom, #BBBBBB 0%, #F0F0F0 100%);
+             box-shadow: 0 1px 0 #B4B3B3;
+         }
+         .social li {
+             background: none repeat scroll 0 0 #B5B5B5;
+             border: 2px solid #B5B5B5;
+             -webkit-border-radius: 50%;
+             -moz-border-radius: 50%;
+             -o-border-radius: 50%;
+             -ms-border-radius: 50%;
+             border-radius: 50%;
+             float: left;
+             height: 36px;
+             line-height: 36px;
+             margin: 0 8px 0 0;
+             padding: 0;
+             text-align: center;
+             width: 36px;
+             transition: all 0.5s ease 0s;
+             -moz-transition: all 0.5s ease 0s;
+             -webkit-transition: all 0.5s ease 0s;
+             -ms-transition: all 0.5s ease 0s;
+             -o-transition: all 0.5s ease 0s;
+         }
+         .social li:hover {
+             transform: scale(1.15) rotate(360deg);
+             -webkit-transform: scale(1.1) rotate(360deg);
+             -moz-transform: scale(1.1) rotate(360deg);
+             -ms-transform: scale(1.1) rotate(360deg);
+             -o-transform: scale(1.1) rotate(360deg);
+         }
+         .social li a {
+             color: #EDEFF1;
+         }
+         .social li:hover {
+             border: 2px solid #2c3e50;
+             background: #2c3e50;
+         }
+         .social li a i {
+             font-size: 16px;
+             margin: 0 0 0 5px;
+             color: #EDEFF1 !important;
+         }
+         .footer-bottom {
+             background: #E3E3E3;
+             border-top: 1px solid #DDDDDD;
+             padding-top: 10px;
+             padding-bottom: 10px;
+         }
+         .footer-bottom p.pull-left {
+             padding-top: 6px;
+         }
+         .payments {
+             font-size: 1.5em;
+         }
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="brand-centered">
+            <a class="navbar-brand" href="http://disputebills.com">Brand</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Home</a></li>
+                <li><a href="travel_blog.html">Travel Blog</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Profile</a></li>
+
+                <li><a href="#">Login</a></li>
+            </ul>
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+    <!--/.container-fluid -->
+</nav>
+<div id="main_top">
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <h2>Test</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="posts">
+
+    <div class="container">
+        <h2 class="span12">3-2-1 grid example</h2>
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6 col-xs-12">
+                <a href="#">
+                    <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                </a>
+            </div>
+        </div>
+        <br><br>
+    </div>
+</div>
+
+<div class="resources">
+    <div class="suggestions">
+        <div class="container">
+            <h2>3-2-1 grid example</h2>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <a href="#">
+                        <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <a href="#">
+                        <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                    </a>
+                </div>
+                <div class="col-lg-4 col-sm-6 col-xs-12">
+                    <a href="#">
+                        <img src="http://placehold.it/800x600" class="thumbnail img-responsive">
+                    </a>
+                </div>
+            </div>
+            <br><br>
+        </div>
+    </div>
+    <div class="container">
+        <h2>4-3-2 grid exampl </h2>
+          <div class="row">
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail pull-left">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+            <div class="col-lg-3 col-sm-4 col-xs-6">
+                <a href="#" class="thumbnail">
+                    <img src="http://placehold.it/350x150" class="img-responsive">
+                </a>
+            </div>
+        </div>
+        <p>This improved responsive layout is achieved using Bootstrap's tiny, small and large grid sizes. By combining use of the <code>col-*</code>,<code>col-sm-*</code> and <code>col-lg-*</code> CSS class. Just like before, the images scale down accordingly, but now our column layout adjusts accordingly too. The
+            column adjustment occurs at pre-defined "breakpoints" that are defined on the Bootstrap CSS media queries. These breakpoints align with common device sizes and widths.
+        </p>
+        <p>Behold the power of the Bootstrap 3's <b>mobile first</b> grid! Now we can come up with even more combinations.</p>
+        <br><br>
+    </div>
+</div>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<footer>
+    <div class="footer" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                    <h3> Lorem Ipsum </h3>
+                    <ul>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                    </ul>
+                </div>
+                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                    <h3> Lorem Ipsum </h3>
+                    <ul>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                    </ul>
+                </div>
+                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                    <h3> Lorem Ipsum </h3>
+                    <ul>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                    </ul>
+                </div>
+                <div class="col-lg-2  col-md-2 col-sm-4 col-xs-6">
+                    <h3> Lorem Ipsum </h3>
+                    <ul>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                        <li> <a href="#"> Lorem Ipsum </a> </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3  col-md-3 col-sm-6 col-xs-12 ">
+                    <h3> Lorem Ipsum </h3>
+                    <ul>
+                        <li>
+                            <div class="input-append newsletter-box text-center">
+                                <input type="text" class="full text-center" placeholder="Email ">
+                                <button class="btn  bg-gray" type="button"> Lorem ipsum <i class="fa fa-long-arrow-right"> </i> </button>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="social">
+                        <li> <a href="#"> <i class=" fa fa-facebook">   </i> </a> </li>
+                        <li> <a href="#"> <i class="fa fa-twitter">   </i> </a> </li>
+                        <li> <a href="#"> <i class="fa fa-google-plus">   </i> </a> </li>
+                        <li> <a href="#"> <i class="fa fa-pinterest">   </i> </a> </li>
+                        <li> <a href="#"> <i class="fa fa-youtube">   </i> </a> </li>
+                    </ul>
+                </div>
+            </div>
+            <!--/.row-->
+        </div>
+        <!--/.container-->
+    </div>
+    <!--/.footer-->
+
+    <div class="footer-bottom">
+        <div class="container">
+            <p class="pull-left"> Copyright © Footer E-commerce Plugin 2014. All right reserved. </p>
+            <div class="pull-right">
+                <ul class="nav nav-pills payments">
+                    <li><i class="fa fa-cc-visa"></i></li>
+                    <li><i class="fa fa-cc-mastercard"></i></li>
+                    <li><i class="fa fa-cc-amex"></i></li>
+                    <li><i class="fa fa-cc-paypal"></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--/.footer-bottom-->
+</footer>
+<script>
+    $(function(){
+        $(".dropdown").hover(
+                function() {
+                    $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+                    $(this).toggleClass('open');
+                    $('b', this).toggleClass("caret caret-up");
+                },
+                function() {
+                    $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+                    $(this).toggleClass('open');
+                    $('b', this).toggleClass("caret caret-up");
+                });
+    });
+
+</script>
+</body>
+</html>                                		
