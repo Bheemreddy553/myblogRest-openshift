@@ -1,0 +1,77 @@
+create database myblog;
+
+CREATE TABLE users
+(
+ name  varchar(50),
+ email varchar(50),
+ password varchar(50),
+ mobilenumber varchar(15),
+ registered_time TIMESTAMP,
+ PRIMARY KEY (email)   
+);
+
+
+
+CREATE TABLE blogposts
+(
+ id int NOT NULL AUTO_INCREMENT,
+ title varchar(150), 
+ body TEXT,
+ location varchar(150),
+ country	  varchar(150), 
+ time     TIMESTAMP,
+ user_id  varchar(250),   
+ PRIMARY KEY (ID),
+ FOREIGN KEY(user_id) references users(email)
+);
+
+CREATE TABLE postdetailes
+(
+ id int NOT NULL AUTO_INCREMENT, 
+ title varchar(150), 
+ subject TEXT,  
+ time     TIMESTAMP,
+ post_id int,
+ user_id  varchar(250), 
+ image_url text,  
+ PRIMARY KEY (ID),
+ FOREIGN KEY(post_id) references blogposts(id),
+ FOREIGN KEY(user_id) references users(email)
+);
+
+
+
+CREATE TABLE images
+(
+ ID int NOT NULL AUTO_INCREMENT,
+ title varchar(50),
+ url text,
+ location varchar(150),
+ country varchar(150), 
+ post_id int,
+ date timestamp,
+ user_id  varchar(250),   
+ PRIMARY KEY (ID),
+ FOREIGN KEY(post_id) references blogposts(id),
+ FOREIGN KEY(user_id) references users(email)
+);
+
+
+
+
+mvn archetype:generate -DarchetypeArtifactId=jersey-quickstart-webapp \
+                -DarchetypeGroupId=org.glassfish.jersey.archetypes -DinteractiveMode=false \
+                -DgroupId=com.myblog -DartifactId=myblog-webapp -Dpackage=com.myblog \
+                -DarchetypeVersion=2.22.1
+
+
+create table latepaymentquotes(
+uniqueid varchar(30) primary key,
+quote double,
+quotedtime timestamp default current_timestamp,
+companyid varchar(40),
+requestid varchar(40),
+foreign key(companyid) references transportcompany(companyid),
+foreign key(requestid) references latepaymentrequests(uniqueid)
+);
+

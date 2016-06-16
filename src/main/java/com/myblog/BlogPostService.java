@@ -45,6 +45,7 @@ public class BlogPostService {
 		catch(Exception e){
 			e.printStackTrace();
 		}
+        logger.info("blogpost {}"+blogPost);
 		return blogPost;
     }
 	

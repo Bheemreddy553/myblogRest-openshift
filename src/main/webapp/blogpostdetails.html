@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="js/myBlogApp.js"></script>
+    <style>
+        body {
+            padding-top:50px;
+        }
+
+        #masthead {
+            min-height:270px;
+            background-color:#000044;
+            color:#aaaacc;
+        }
+
+        #masthead h1 {
+            font-size: 55px;
+            line-height: 1;
+        }
+
+        #masthead .well {
+            margin-top:13%;
+            background-color:#111155;
+            border-color:#000033;
+        }
+
+        .icon-bar {
+            background-color:#fff;
+        }
+
+        @media screen and (min-width: 768px) {
+            #masthead h1 {
+                font-size: 100px;
+            }
+        }
+
+        .navbar-bright {
+            background-color:#111155;
+            color:#fff;
+        }
+
+        .navbar-bright a, #masthead a, #masthead .lead {
+            color:#aaaacc;
+        }
+
+        .navbar-bright li > a:hover {
+            background-color:#000033;
+        }
+
+        .affix-top,.affix{
+            position: static;
+        }
+
+        @media (min-width: 979px) {
+            #sidebar.affix-top {
+                position: static;
+                margin-top:30px;
+                width:228px;
+            }
+
+            #sidebar.affix {
+                position: fixed;
+                top:70px;
+                width:228px;
+            }
+        }
+
+        #sidebar li.active {
+            border:0 #eee solid;
+            border-right-width:4px;
+        }
+
+        #mainCol h2 {
+            padding-top: 55px;
+            margin-top: -55px;
+        }
+
+
+        .form-inline .form-group {
+            margin-right: 10px;
+        }
+
+        .well-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgb(66, 139, 202);
+            border-color: rgb(53, 126, 189);
+        }
+        .row.ng-scope {
+            margin-top: 38px;
+        }
+        .glyphicon {
+            margin-right: 5px;
+        }
+        .articles_list {
+            margin-top: 20px;
+        }
+        .articles_list .carousel-inner>.item>a>img, .carousel-inner>.item>img, .img-responsive, .thumbnail a>img, .thumbnail>img {
+            display: block;
+            max-width: 101%;
+            height: auto;
+            padding-top: 27px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="navbar navbar-bright navbar-fixed-top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">Bootply</a>
+        </div>
+        <nav class="collapse navbar-collapse" role="navigation">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">Get Started</a>
+                </li>
+                <li>
+                    <a href="#">Edit</a>
+                </li>
+                <li>
+                    <a href="#">Visualize</a>
+                </li>
+                <li>
+                    <a href="#">Prototype</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- Begin Body -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-3" id="leftCol">
+
+            <ul class="nav nav-stacked" id="sidebar">
+                <li><a href="newblog_post_form.html">New Post</a></li>
+                <li><a href="viewlistpost.html">List Of Posts</a></li>
+                <li><a href="#sec2">Section 2</a></li>
+                <li><a href="#sec3">Section 3</a></li>
+                <li><a href="#sec4">Section 4</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9" id="mainCol" ng-app="myBlogApp">
+
+            <div class="articles_list" ng-controller="blogPostSubmissionCtrl">
+
+
+                <div class="container pagetitle" >
+                    <div class="row" >
+                        <div class="col-md-9">
+                            <div class="row" ng-repeat="post in postDetalis">
+                                <div class="col-sm-4"><a href="viewArticl2.html" ng-click="viewArticleById(post.id)" class=""><img src="http://placehold.it/1280X720" class="img-responsive"></a>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h3 class="title"><a href="viewArticl2.html" ng-click="viewArticleById(post.id)"  class="">{{post.title}}</a></h3>
+                                    <p class="text-muted"><span class="glyphicon glyphicon-lock"></span> {{post.subject}}</p>
+                                    <p class="text-muted"> {{post.time |  date : "fullDate" }} by <a href="#">Bheemreddy</a>  </p>
+                                </div>
+                                <hr>
+                            </div>
+
+
+                            <ul class="pagination pagination-lg pull-right">
+                                <li><a href="#">«</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">»</a></li>
+                            </ul>
+                        </div>
+
+                        <!--  <div class="col-md-3">
+
+                              &lt;!&ndash;<div class="row" >
+                                  <nav class="navbar navbar-inverse navbar-fixed-top pull-right" id="sidebar-wrapper" role="navigation">
+                                      <ul class="nav sidebar-nav">
+                                          <li class="sidebar-brand">
+                                              <a href="#">
+                                                  Labsalundry
+                                              </a>
+                                          </li>
+                                          <li>
+                                              <a href="#">inici</a>
+                                          </li>
+                                          <li>
+                                              <a href="#">About</a>
+                                          </li>
+                                          <li>
+                                              <a href="#">Events</a>
+                                          </li>
+                                          <li>
+                                              <a href="#">Team</a>
+                                          </li>
+                                          <li class="dropdown">
+                                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
+                                              <ul class="dropdown-menu" role="menu">
+                                                  <li class="dropdown-header">Dropdown heading</li>
+                                                  <li><a href="#">Action</a></li>
+                                                  <li><a href="#">Another action</a></li>
+                                                  <li><a href="#">Something else here</a></li>
+                                                  <li><a href="#">Separated link</a></li>
+                                                  <li><a href="#">One more separated link</a></li>
+                                              </ul>
+                                          </li>
+                                          <li>
+                                              <a href="#">Services</a>
+                                          </li>
+                                          <li>
+                                              <a href="#">Contact</a>
+                                          </li>
+                                          <li>
+                                              <a href="https://twitter.com/maridlcrmn">Follow me</a>
+                                          </li>
+                                      </ul>
+                                  </nav>
+                              </div>&ndash;&gt;
+                              <div class="row">
+                                  <div class="col-sm-12">
+                                      <div ><a href="#" class=""><img src="http://placehold.it/1280X720" class="img-responsive"></a>
+                                      </div>
+                                      <h3 class="title">How to Fight Fraud with Artificial Intelligence and Intelligent Analytics</h3>
+                                      <p class="text-muted"><span class="glyphicon glyphicon-lock"></span> Available Exclusively for Premium Members</p>
+                                      <p>Could artificial intelligence have been used to prevent the high-profile Target breach? The concept is not so far-fetched. Organizations such as Mastercard and RBS WorldPay have long relied on artificial intelligence to detect fraudulent transaction patterns and prevent card.</p>
+
+                                      <p class="text-muted">Presented by <a href="#">Ellen Richey</a></p>
+
+                                  </div>
+                              </div>
+                              <hr>
+
+
+
+                          </div>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('#sidebar').affix({
+        offset: {
+            top: 245
+        }
+    });
+
+    var $body   = $(document.body);
+    var navHeight = $('.navbar').outerHeight(true) + 10;
+
+    $body.scrollspy({
+        target: '#leftCol',
+        offset: navHeight
+    });
+</script>
+</body>
+</html>
