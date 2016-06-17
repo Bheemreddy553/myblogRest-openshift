@@ -157,13 +157,13 @@ Date: 05 Jan 2016
     <div class="row"  >
         <!--  <alert ng-repeat="alert in alerts" ng-if="alert.msg" dismiss-on-timeout='5000' type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
 -->
-        <div class="row articles_list"  >
-                    <div class="col-md-9">
+         <div class="articl_list">
+                    <div class="col-md-9" >
                         <div class="row" ng-repeat="post in posts">
-                            <div class="col-sm-12"><a href="#" ng-click="viewArticle(post)"  class=""><img src="http://placehold.it/1280X720" class="img-responsive"></a>
+                            <div class="col-sm-12"><a ui-sref="/app/readPost/{{post.id}}" class=""><img src="http://placehold.it/1280X720" class="img-responsive"></a>
                             </div>
                             <div class="col-sm-12">
-                                <h3 class="title"><a href="#" ng-click="viewArticle(post)"  class="">{{post.title}}</a></h3>
+                                <h3 class="title"><a ui-sref="/app/readPost/{{post.id}}"    class="">{{post.title}}</a></h3>
                                 <p class="text-muted"><span class="glyphicon glyphicon-lock"></span> <!--{{post.body}}--></p>
                                 <p >{{post.body}}</p>
                                 <p class="text-muted">Presented by <a href="#">Ellen Richey</a>  Date : {{post.time |  date : "fullDate" }}</p>
@@ -174,8 +174,8 @@ Date: 05 Jan 2016
 
                         <div class="row euqal">
                             <div class="well-sm">
-                                <a href="viewArticl2.html" ng-click="viewTest()" class=""><img src="http://placehold.it/1280X720" class="img-responsive"></a>
-                                <h3 class="title">How to Fight Fraud with Artificial Intelligence and Intelligent Analytics</h3>
+                                <a ui-sref-active="selected" ui-sref="app/readPost({ id: 'dfsdf1' })" class=""><img src="http://placehold.it/1280X720" class="img-responsive"></a>
+                                <h3 class="title" ui-sref-active="selected"  ui-sref="app/readPost({ id:  1 })">How to Fight Fraud with Artificial Intelligence and Intelligent Analytics</h3>
                                 <p class="text-muted"><span class="glyphicon glyphicon-lock"></span> Available Exclusively for Premium Members</p>
                                 <p>Could artificial intelligence have been used to prevent the high-profile Target breach? The concept is not so far-fetched. Organizations such as Mastercard and RBS WorldPay have long relied on artificial intelligence to detect fraudulent transaction patterns and prevent card.</p>
 

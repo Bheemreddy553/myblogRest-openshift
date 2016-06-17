@@ -12,7 +12,7 @@
 var dashboard = angular.module('dashboard', ['ui.router', 'ngAnimate','ngMaterial']);
 
 
-dashboard.config(["$stateProvider", function ($stateProvider) {
+dashboard.config(["$stateProvider", function ($stateProvider,$stateParams) {
 
     //dashboard home page state
     $stateProvider.state('app.dashboard', {
@@ -162,6 +162,23 @@ dashboard.config(["$stateProvider", function ($stateProvider) {
         url: '/viewPosts',
         templateUrl: 'app/modules/dashboard/views/viewposts.html',
         controller: 'viewPostsController',
+        controllerAs: 'vm',
+        data: {
+            pageTitle: 'View Posts'
+        },
+        resolve: {
+            id: ['$stateParams', function ($stateParams) {
+                return $stateParams.id; //By putting this here...
+            }]
+        }
+
+    });
+
+    //view posts page state
+    $stateProvider.state('app/readPost', {
+        url: '/readPost/:id',
+        templateUrl: 'app/modules/dashboard/views/readpost.html',
+        controller: 'readPostsController',
         controllerAs: 'vm',
         data: {
             pageTitle: 'View Posts'

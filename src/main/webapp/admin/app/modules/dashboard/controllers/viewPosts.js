@@ -36,6 +36,25 @@ dashboard.controller("viewPostsController", ['$rootScope', '$scope', '$state', '
 
 
 
+        $scope.readPost= function( ){
+
+            $scope.myText = "dfsdf";
+            $state.go('/viewPost/'+$scope.myText);
+
+
+        };
+
+
+
+        $scope.readPost= function(post1){
+            $scope.post2 = post1;
+            $scope.viewPost = post1;
+            $scope.myText = "dfsdf";
+            console.log("viewArticle  "+post1.title);
+            $state.go('app/readPost/',{postId:post1.id});
+
+
+        };
 
 
 
