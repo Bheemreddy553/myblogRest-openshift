@@ -45,6 +45,7 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.3.0" />
           <element id="library" level="project" name="Maven: org.glassfish.jersey.media:jersey-media-multipart:2.22.1" />
           <element id="library" level="project" name="Maven: org.jvnet.mimepull:mimepull:1.9.6" />
+          <element id="file-copy" path="$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/truck-1.0.jar" />
         </element>
       </element>
       <element id="directory" name="META-INF">
